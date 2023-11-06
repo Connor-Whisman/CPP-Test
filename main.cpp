@@ -5,13 +5,22 @@ using namespace std;
 
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 800
-#define SEG_WIDTH 200
-#define SEG_HEIGHT 400
+#define SEG_CONTAINER_WIDTH 200
+#define SEG_CONTAINER_HEIGHT 400
+#define SEG_WIDTH 20
+#define SEG_HEIGHT 100
 
-void decode(bool A, bool B, bool C, bool D)
+#define GREY 35, 35, 35
+
+bool A = 0;
+bool B = 0;
+bool C = 0;
+bool D = 1;
+bool a, b, c, d, e, f, g = 0;
+
+
+void decode()
 {
-    bool a, b, c, d, e, f, g = 0;
-
     a = ((B && D) || (!B && !D)) || (A || C);
     b = ((C && D) || (!C && !D)) || !B;
     c = (B || !C) || D;
@@ -24,18 +33,46 @@ void decode(bool A, bool B, bool C, bool D)
 }
 
 
-
 int main()
 {
-    decode(0,0,0,1);
+    decode();
+
 
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "7 Segment Decoder");
 
-    sf::RectangleShape segDisplay(sf::Vector2f(SEG_WIDTH, SEG_HEIGHT));
-    const int segPosX = WINDOW_WIDTH / 2 - SEG_WIDTH / 2 + 350;
-    const int segPosY = WINDOW_HEIGHT / 2 - SEG_HEIGHT / 2;
+    const int segPosX = WINDOW_WIDTH / 2 - SEG_CONTAINER_WIDTH / 2 + 350;
+    const int segPosY = WINDOW_HEIGHT / 2 - SEG_CONTAINER_HEIGHT / 2;
+
+    // 7 SEGMENT CONTAINER
+    sf::RectangleShape segDisplay(sf::Vector2f(SEG_CONTAINER_WIDTH, SEG_CONTAINER_HEIGHT));
     segDisplay.setFillColor(sf::Color::Black);
     segDisplay.setPosition(segPosX, segPosY);
+
+    // SEGMENTS
+    sf::RectangleShape segA(sf::Vector2f(SEG_WIDTH, SEG_HEIGHT));
+    segA.setFillColor(sf::Color::White);
+    segA.setPosition(segPosX + SEG_HEIGHT / 2, segPosY + 50);
+    segA.setRotation(-90);
+    sf::RectangleShape segB(sf::Vector2f(SEG_WIDTH, SEG_HEIGHT));
+    segB.setFillColor(sf::Color::White);
+    segB.setPosition(segPosX + SEG_CONTAINER_WIDTH - SEG_WIDTH - 25, segPosY + 75);
+    sf::RectangleShape segC(sf::Vector2f(SEG_WIDTH, SEG_HEIGHT));
+    segC.setFillColor(sf::Color::White);
+    segC.setPosition(segPosX + SEG_CONTAINER_WIDTH - SEG_WIDTH - 25, segPosY + SEG_CONTAINER_HEIGHT - SEG_HEIGHT - 75);
+    sf::RectangleShape segD(sf::Vector2f(SEG_WIDTH, SEG_HEIGHT));
+    segD.setFillColor(sf::Color::White);
+    segD.setPosition(segPosX + SEG_HEIGHT / 2, segPosY + SEG_CONTAINER_HEIGHT + SEG_WIDTH - 50);
+    segD.setRotation(-90);
+    sf::RectangleShape segE(sf::Vector2f(SEG_WIDTH, SEG_HEIGHT));
+    segE.setFillColor(sf::Color::White);
+    segE.setPosition(segPosX + SEG_HEIGHT / 2 - 25, segPosY + SEG_CONTAINER_HEIGHT - SEG_HEIGHT - 75);
+    sf::RectangleShape segF(sf::Vector2f(SEG_WIDTH, SEG_HEIGHT));
+    segF.setFillColor(sf::Color::White);
+    segF.setPosition(segPosX + SEG_HEIGHT / 2 - 25, segPosY + 75);
+    sf::RectangleShape segG(sf::Vector2f(SEG_WIDTH, SEG_HEIGHT));
+    segG.setFillColor(sf::Color::White);
+    segG.setPosition(segPosX + SEG_HEIGHT / 2, segPosY + SEG_CONTAINER_HEIGHT / 2 + SEG_WIDTH / 2);
+    segG.setRotation(-90);
 
     while (window.isOpen())
     {
@@ -46,10 +83,26 @@ int main()
                 window.close();
         }
 
-        window.clear(sf::Color::White);
+        a == 1 ? segA.setFillColor(sf::Color::Green) : segA.setFillColor(sf::Color(GREY));
+        b == 1 ? segB.setFillColor(sf::Color::Green) : segB.setFillColor(sf::Color(GREY));
+        c == 1 ? segC.setFillColor(sf::Color::Green) : segC.setFillColor(sf::Color(GREY));
+        d == 1 ? segD.setFillColor(sf::Color::Green) : segD.setFillColor(sf::Color(GREY));
+        e == 1 ? segE.setFillColor(sf::Color::Green) : segE.setFillColor(sf::Color(GREY));
+        f == 1 ? segF.setFillColor(sf::Color::Green) : segF.setFillColor(sf::Color(GREY));
+        g == 1 ? segG.setFillColor(sf::Color::Green) : segG.setFillColor(sf::Color(GREY));
+
+        window.clear(sf::Color(150, 150, 150));
         window.draw(segDisplay);
+        window.draw(segA);
+        window.draw(segB);
+        window.draw(segC);
+        window.draw(segD);
+        window.draw(segE);
+        window.draw(segF);
+        window.draw(segG);
         window.display();
     }
+
     return 0;
 }
 
