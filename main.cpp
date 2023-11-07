@@ -12,9 +12,9 @@ using namespace std;
 
 #define GREY 35, 35, 35
 
-bool A = 0;
-bool B = 0;
-bool C = 0;
+bool A = 1;
+bool B = 1;
+bool C = 1;
 bool D = 1;
 bool a, b, c, d, e, f, g = 0;
 
